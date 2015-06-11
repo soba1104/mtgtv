@@ -1,7 +1,8 @@
 Mtgtv::App.controllers :expansion do
   get :index, :with => :name do
-    "name = #{params[:name]}"
-  end  
+    render 'expansion/index'
+  end
+
   # get :index, :map => '/foo/bar' do
   #   session[:foo] = 'bar'
   #   render 'index'
