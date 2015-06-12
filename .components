@@ -3,7 +3,7 @@
 :test: none
 :mock: none
 :script: none
-:renderer: haml
+:renderer: slim
 :stylesheet: none
 :namespace: Mtgtv
 :migration_format: number

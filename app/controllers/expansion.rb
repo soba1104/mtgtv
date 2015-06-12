@@ -1,5 +1,6 @@
 Mtgtv::App.controllers :expansion do
   get :index, :with => :name do
+    #@expansion = Expansion.load(params[:name])
     render 'expansion/index'
   end
 
