@@ -41,6 +41,8 @@ end
 # Add your after (RE)load hooks here
 #
 Padrino.after_load do
+  config = YAML.load(File.read(Padrino.root('/config/config.yml')))
+  Config.set(config)
 end
 
 Padrino.load!

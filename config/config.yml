@@ -1,0 +1,6 @@
+:development:
+  :data: /data
+:test:
+  :data: /data
+:production:
+  :data: /data
