@@ -4,6 +4,6 @@
 :mock: none
 :script: none
 :renderer: slim
-:stylesheet: none
+:stylesheet: compass
 :namespace: Mtgtv
 :migration_format: number

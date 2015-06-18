@@ -14,6 +14,7 @@ source 'https://rubygems.org'
 gem 'rake'
 
 # Component requirements
+gem 'compass'
 gem 'haml'
 gem 'slim'
 
