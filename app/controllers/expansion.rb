@@ -1,6 +1,11 @@
 Mtgtv::App.controllers :expansion do
   get :index, :with => :name do
-    @expansion = Expansion.load(params[:name])
+    name = params[:name].upcase
+    path = Padrino.root(Config[:data], "#{name}.json")
+    # TODO json の存在チェックとエラー処理
+    json = File.read(path)
+    @expansion = Expansion.from_json(File.read(path))
+    puts @expansion.cards.inspect
     render 'expansion/index'
   end
 

@@ -42,7 +42,7 @@ end
 #
 Padrino.after_load do
   config = YAML.load(File.read(Padrino.root('/config/config.yml')))
-  Config.set(config)
+  Config.set(config[Padrino.env])
 end
 
 Padrino.load!

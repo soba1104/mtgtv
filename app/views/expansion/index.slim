@@ -1,6 +1,12 @@
 doctype html
 html
   head
-    title #{@expansion.name}
+    title = @expansion.name
   body
     h1 hogehogehoge
+    h2 = @expansion.name
+    h2 = @expansion.cards.size
+    ul
+      - @expansion.cards.each do |card|
+        hoge
+        <li>#{card.to_s}</li>
