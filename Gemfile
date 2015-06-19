@@ -33,3 +33,4 @@ gem 'padrino', '0.12.5'
 
 gem 'nokogiri'
 gem 'json'
+gem 'compass-blueprint'

@@ -1,0 +1,18 @@
+@import "blueprint/reset";
+@import "partials/base";
+@import "blueprint";
+
+body {
+  @include blueprint-typography(true);
+}
+
+.expansion {
+  @include container;
+  .card {
+    @include column(4);
+  }
+
+  .last {
+    @include last;
+  }
+}
