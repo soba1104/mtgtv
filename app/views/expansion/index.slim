@@ -6,8 +6,18 @@ html
   body
     .expansion
       h1.name = @expansion.name
-      - @expansion.cards.each_with_index do |card, idx|
-        - if (idx + 1) % 6 == 0
-          .card.last = card.to_s
-        - else
-          .card = card.to_s
+      - idx = 0
+      - @expansion.cards.each do |card|
+        - next if card.type =~ /基本土地/
+        - idx += 1
+        - c = (idx % 6 == 0) ? 'last' : ''
+        .card class=c
+          p = card.en_name
+          p = card.jp_name
+          img src=card.image
+          p = card.type
+          p = card.mana
+          - if card.pt
+            p = card.pt
+          p = card.rarity
+          p = card.text

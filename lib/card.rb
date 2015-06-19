@@ -1,4 +1,9 @@
 class Card
+  attr_reader :image, :jp_name, :en_name
+  attr_reader :type, :mana
+  attr_reader :power, :toughness, :pt
+  attr_reader :text, :rarity
+
   public
 
   def self.from_hash(hash)
