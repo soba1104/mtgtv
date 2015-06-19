@@ -4,10 +4,8 @@ html
     title = @expansion.name
     = stylesheet_link_tag :expansion
   body
-    h1 hogehogehoge
-    h2 = @expansion.name
-    h2 = @expansion.cards.size
     .expansion
+      h1.name = @expansion.name
       - @expansion.cards.each_with_index do |card, idx|
         - if (idx + 1) % 6 == 0
           .card.last = card.to_s

@@ -8,6 +8,11 @@ body {
 
 .expansion {
   @include container;
+
+  .name {
+    @include column(24);
+  }
+
   .card {
     @include column(4);
   }
