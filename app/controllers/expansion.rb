@@ -1,13 +1,20 @@
 Mtgtv::App.controllers :expansion do
-  get :index, :with => :name do
-    name = params[:name].upcase
-    path = Padrino.root(Config[:data], "#{name}.json")
+  loader = proc do |name|
     # TODO json の存在チェックとエラー処理
     # TODO 相対パスを入れられても大丈夫なようにエスケープ、ないし候補のエキスパンションと照合する。
-    json = File.read(path)
-    @expansion = Expansion.from_json(File.read(path))
-    puts @expansion.cards.inspect
+    name = name.upcase
+    path = Padrino.root(Config[:data], "#{name}.json")
+    File.read(path)
+  end
+
+  get :index, :with => :name do
+    json = loader.call(params[:name])
+    @expansion = Expansion.from_json(json)
     render 'expansion/index'
+  end
+
+  get :json, :map => '/expansion/:name/json', :provides => :json do
+    loader.call(params[:name])
   end
 
   # get :index, :map => '/foo/bar' do
