@@ -6,18 +6,20 @@ html
   body
     .expansion
       h1.name = @expansion.name
-      - idx = 0
-      - @expansion.cards.each do |card|
-        - next if card.type =~ /基本土地/
-        - idx += 1
-        - c = (idx % 6 == 0) ? 'last' : ''
-        .card class=c
-          p = card.en_name
-          p = card.jp_name
-          img src=card.image
-          p = card.type
-          p = card.mana
-          - if card.pt
-            p = card.pt
-          p = card.rarity
-          p = card.text
+      - slices = @expansion.cards.delete_if{|card|
+      -   card.type =~ /基本土地/
+      - }.each_slice(6).to_a
+      - slices.each do |cards|
+        .row
+          - cards.each_with_index do |card, idx|
+            - c = (idx == 5) ? 'last' : ''
+            .card class=c
+              p = card.en_name
+              p = card.jp_name
+              img src=card.image
+              p = card.type
+              p = card.mana
+              - if card.pt
+                p = card.pt
+              p = card.rarity
+              p = card.text

@@ -13,17 +13,22 @@ body {
     @include column(24);
   }
 
-  .card {
-    @include column(4);
-    img {
-      width: 100%;
-    }
-    p {
-      margin: 0px;
-    }
-  }
+  .row {
+    @include container;
 
-  .last {
-    @include last;
+    .card {
+      @include column(4);
+
+      img {
+        width: 100%;
+      }
+      p {
+        margin: 0px;
+      }
+    }
+
+    .last {
+      @include last;
+    }
   }
 }
