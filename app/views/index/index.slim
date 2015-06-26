@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title MTGTV
+    = stylesheet_link_tag 'index'
+  body
+    #expansions
+      - @expansions.each do |e|
+        .expansion
+          a href="/expansion/#{e['name']}"
+            = "#{e['name']}: #{e['description']}"

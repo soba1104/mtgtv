@@ -1,0 +1,19 @@
+@import "blueprint/reset";
+@import "partials/base";
+@import "blueprint";
+
+body {
+  @include blueprint-typography(true);
+}
+
+#expansions {
+  @include container;
+
+  .expansion {
+    @include column(24);
+    @include last;
+    a {
+      margin: 0px;
+    }
+  }
+}
