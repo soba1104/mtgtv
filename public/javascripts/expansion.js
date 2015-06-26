@@ -14,9 +14,13 @@ $(document).ready(function() {
         for (var i = 0; i < cards.length; i += rowsize) {
           rows.push({cards: cards.slice(i, i + rowsize)})
         }
-      console.log(cards[0])
         this.$data.rows = rows
       }.bind(this))
+    },
+    watch: {
+      'rows': function(n, o) {
+        $('img.lazy').lazyload()
+      }
     }
   })
 })
