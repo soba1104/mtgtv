@@ -38,31 +38,33 @@ DSTDIR = File.expand_path(File.join(File.dirname(__FILE__), '../data'))
 EXPANSIONS = "#{DSTDIR}/expansions.json"
 directory DSTDIR
 
-file EXPANSIONS => DSTDIR do
-  url = CARD_LIST_BASE_URL
-  html = open(url).read
-  expansions = parse_expansions(html)
-  json = expansions.to_json
-  File.open(EXPANSIONS, 'w'){|f| f.write(json)}
-end
-
-task :load => [:environment, EXPANSIONS] do
-  expansions = JSON.parse(File.read(EXPANSIONS))
-  deps = []
-  expansions.each do |e|
-    name = e['name'].upcase
-    path = File.join(DSTDIR, "#{name}.json")
-    file path => DSTDIR do
-      puts "loading #{name} ..."
-      url = "#{CARD_LIST_BASE_URL}/list/#{name}.html"
-      html = open(url).read
-      cards = parse_cardlist(html)
-      expansion = Expansion.from_cards(name, cards)
-      json = expansion.to_json
-      dst = File.join(DSTDIR, "#{name}.json")
-      File.open(dst, 'w'){|f| f.write(json)}
-    end
-    deps << path
+namespace :expansion do
+  file EXPANSIONS => DSTDIR do
+    url = CARD_LIST_BASE_URL
+    html = open(url).read
+    expansions = parse_expansions(html)
+    json = expansions.to_json
+    File.open(EXPANSIONS, 'w'){|f| f.write(json)}
   end
-  task(:run => deps).invoke()
+
+  task :load => [:environment, EXPANSIONS] do
+    expansions = JSON.parse(File.read(EXPANSIONS))
+    deps = []
+    expansions.each do |e|
+      name = e['name'].upcase
+      path = File.join(DSTDIR, "#{name}.json")
+      file path => DSTDIR do
+        puts "loading #{name} ..."
+        url = "#{CARD_LIST_BASE_URL}/list/#{name}.html"
+        html = open(url).read
+        cards = parse_cardlist(html)
+        expansion = Expansion.from_cards(name, cards)
+        json = expansion.to_json
+        dst = File.join(DSTDIR, "#{name}.json")
+        File.open(dst, 'w'){|f| f.write(json)}
+      end
+      deps << path
+    end
+    task(:run => deps).invoke()
+  end
 end
