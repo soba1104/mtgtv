@@ -21,14 +21,48 @@ def parse_cardlist(html)
   end
 end
 
-task :expansion, [:name] => :environment do |task, args|
-  name = args[:name].upcase
-  url = "#{CARD_LIST_BASE_URL}/list/#{name}.html"
+def parse_expansions(html)
+  doc = Nokogiri::HTML.parse(html)
+  doc.xpath('//ul[@class="entries"]/li').map do |expansion|
+    a = expansion.at('a')
+    name = File.basename(a['href'], '.html')
+    desc = a.text
+    {
+      :name => name,
+      :description => desc,
+    }
+  end
+end
+
+DSTDIR = File.expand_path(File.join(File.dirname(__FILE__), '../data'))
+EXPANSIONS = "#{DSTDIR}/expansions.json"
+directory DSTDIR
+
+file EXPANSIONS => DSTDIR do
+  url = CARD_LIST_BASE_URL
   html = open(url).read
-  cards = parse_cardlist(html)
-  expansion = Expansion.from_cards(name, cards)
-  json = expansion.to_json
-  dst = File.join(Padrino.root, 'data', "#{name}.json")
-  FileUtils.mkdir_p(File.dirname(dst))
-  File.open(dst, 'w'){|f| f.write(json)}
+  expansions = parse_expansions(html)
+  json = expansions.to_json
+  File.open(EXPANSIONS, 'w'){|f| f.write(json)}
+end
+
+task :load => [:environment, EXPANSIONS] do
+  expansions = JSON.parse(File.read(EXPANSIONS))
+  deps = []
+  expansions.each do |e|
+    name = e['name'].upcase
+    path = File.join(DSTDIR, "#{name}.json")
+    file path => DSTDIR do
+      puts "loading #{name} ..."
+      url = "#{CARD_LIST_BASE_URL}/list/#{name}.html"
+      html = open(url).read
+      cards = parse_cardlist(html)
+      expansion = Expansion.from_cards(name, cards)
+      json = expansion.to_json
+      dst = File.join(DSTDIR, "#{name}.json")
+      File.open(dst, 'w'){|f| f.write(json)}
+    end
+    deps << path
+  end
+  task(:run => deps).invoke()
 end
