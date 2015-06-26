@@ -1,14 +1,14 @@
 doctype html
 html
   head
-    title = @expansion.name
+    title = @name
     = stylesheet_link_tag 'expansion'
     = javascript_include_tag 'jquery-2.1.4'
     = javascript_include_tag 'vue'
     = javascript_include_tag 'expansion'
   body
     .expansion
-      h1.name = @expansion.name
+      h1.name = @name
       .row v-repeat='rows'
         .card v-repeat='card: cards' class='{{$index == 5 ? "last" : ""}}'
           p
