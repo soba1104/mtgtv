@@ -2,24 +2,27 @@ doctype html
 html
   head
     title = @expansion.name
-    = stylesheet_link_tag :expansion
+    = stylesheet_link_tag 'expansion'
+    = javascript_include_tag 'jquery-2.1.4'
+    = javascript_include_tag 'vue'
+    = javascript_include_tag 'expansion'
   body
     .expansion
       h1.name = @expansion.name
-      - slices = @expansion.cards.delete_if{|card|
-      -   card.type =~ /基本土地/
-      - }.each_slice(6).to_a
-      - slices.each do |cards|
-        .row
-          - cards.each_with_index do |card, idx|
-            - c = (idx == 5) ? 'last' : ''
-            .card class=c
-              p = card.en_name
-              p = card.jp_name
-              img src=card.image
-              p = card.type
-              p = card.mana
-              - if card.pt
-                p = card.pt
-              p = card.rarity
-              p = card.text
+      .row v-repeat='rows'
+        .card v-repeat='card: cards' class='{{$index == 5 ? "last" : ""}}'
+          p
+            | {{card.en_name}}
+          p
+            | {{card.jp_name}}
+          img src='{{card.image}}'
+          p
+            | {{card.type}}
+          p
+            | {{card.mana}}
+          p
+            | {{card.power != undefined ? card.power + '/' + card.toughness : ''}}
+          p
+            | {{card.rarity}}
+          p
+            | {{card.text}}
