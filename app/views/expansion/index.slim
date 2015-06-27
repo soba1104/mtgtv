@@ -12,12 +12,12 @@ html
     #toolbox
       #color_filter
         span 色フィルタ
-        input type='checkbox' v-model='white' 白
-        input type='checkbox' v-model='black' 黒
-        input type='checkbox' v-model='red' 赤
-        input type='checkbox' v-model='blue' 青
-        input type='checkbox' v-model='green' 緑
-        input type='checkbox' v-model='other' 他
+        input type='checkbox' v-model='W' 白
+        input type='checkbox' v-model='U' 青
+        input type='checkbox' v-model='B' 黒
+        input type='checkbox' v-model='R' 赤
+        input type='checkbox' v-model='G' 緑
+        input type='checkbox' v-model='O' 他
     .expansion
       h1.name = @name
       .row v-repeat='rows'

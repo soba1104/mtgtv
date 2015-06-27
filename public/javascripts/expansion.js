@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  new Vue({
+  var evm = new Vue({
     el: '.expansion',
     data: {
       rows: [],
@@ -7,9 +7,7 @@ $(document).ready(function() {
     },
     compiled: function() {
       this.cards.onload = function() {
-        var slices = this.cards.slices(6)
-        var rows = slices.map(function(slice) { return {cards: slice} })
-        this.$data.rows = rows
+        this.update()
       }.bind(this)
       this.cards.load()
     },
@@ -19,30 +17,38 @@ $(document).ready(function() {
       }
     }
   })
+  evm.update = function(cards) {
+    cards = cards ? cards : this.cards.data
+    var slices = this.cards.slices(6, cards)
+    this.rows = slices.map(function(slice) { return {cards: slice} })
+  }
 
   var cf_gen = function(color) {
     return function(n, o) {
-      console.log(color + ': ' + o + ' -> ' + n)
+      var colors = ['W', 'B', 'R', 'U', 'G', 'O'].filter(function(c) {
+        return this.$data[c]
+      }.bind(this))
+      evm.update(evm.cards.colors(colors))
     }
   }
 
-  new Vue({
+  var cvm = new Vue({
     el: '#toolbox',
     data: {
-      white: true,
-      black: true,
-      red: true,
-      blue: true,
-      green: true,
-      other: true,
+      'W': true,
+      'B': true,
+      'R': true,
+      'U': true,
+      'G': true,
+      'O': true,
     },
     watch: {
-      'white': cf_gen('W'),
-      'black': cf_gen('B'),
-      'red': cf_gen('R'),
-      'blue': cf_gen('U'),
-      'green': cf_gen('G'),
-      'other': cf_gen('O'),
+      'W': cf_gen('W'),
+      'B': cf_gen('B'),
+      'R': cf_gen('R'),
+      'U': cf_gen('U'),
+      'G': cf_gen('G'),
+      'O': cf_gen('O'),
     }
   })
 })
