@@ -23,7 +23,7 @@ def parse_cardlist(html)
     pt = (power && toughness) ? "#{power}/#{toughness}" : nil
     text = card.at('.text').text
     rarity = card.at('.sets').text
-    Card.new(jp_name, en_name, image, mana, colors, type, power, toughness, text, rarity)
+    Card.new(jp_name, en_name, image, colors, mana, type, power, toughness, text, rarity)
   end
 end
 
