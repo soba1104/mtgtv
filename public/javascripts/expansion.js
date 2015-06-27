@@ -41,11 +41,12 @@ $(document).ready(function() {
       other: true,
     },
     watch: {
-      'white': cf_gen('白'),
-      'black': cf_gen('黒'),
-      'blue': cf_gen('青'),
-      'green': cf_gen('緑'),
-      'other': cf_gen('他'),
+      'white': cf_gen('W'),
+      'black': cf_gen('B'),
+      'red': cf_gen('R'),
+      'blue': cf_gen('U'),
+      'green': cf_gen('G'),
+      'other': cf_gen('O'),
     }
   })
 })
