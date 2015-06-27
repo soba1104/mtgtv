@@ -23,4 +23,29 @@ $(document).ready(function() {
       }
     }
   })
+
+  var cf_gen = function(color) {
+    return function(n, o) {
+      console.log(color + ': ' + o + ' -> ' + n)
+    }
+  }
+
+  new Vue({
+    el: '#toolbox',
+    data: {
+      white: true,
+      black: true,
+      red: true,
+      blue: true,
+      green: true,
+      other: true,
+    },
+    watch: {
+      'white': cf_gen('白'),
+      'black': cf_gen('黒'),
+      'blue': cf_gen('青'),
+      'green': cf_gen('緑'),
+      'other': cf_gen('他'),
+    }
+  })
 })

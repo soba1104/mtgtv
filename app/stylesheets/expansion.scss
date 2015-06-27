@@ -6,6 +6,14 @@ body {
   @include blueprint-typography(true);
 }
 
+#toolbox {
+  @include container;
+
+  #color_filter {
+    @include column(6);
+  }
+}
+
 .expansion {
   @include container;
 
