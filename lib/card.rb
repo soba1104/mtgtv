@@ -1,6 +1,6 @@
 class Card
   attr_reader :image, :jp_name, :en_name
-  attr_reader :type, :mana
+  attr_reader :colors, :type, :mana
   attr_reader :power, :toughness, :pt
   attr_reader :text, :rarity
 
@@ -11,6 +11,7 @@ class Card
       hash['jp_name'],
       hash['en_name'],
       hash['image'],
+      hash['colors'],
       hash['mana'],
       hash['type'],
       hash['power'],
@@ -20,10 +21,11 @@ class Card
     )
   end
 
-  def initialize(jp_name, en_name, image, mana, type, power, toughness, text, rarity)
+  def initialize(jp_name, en_name, image, colors, mana, type, power, toughness, text, rarity)
     @jp_name = jp_name
     @en_name = en_name
     @image = image
+    @colors = colors
     @mana = mana
     @type = type
     @power = power
@@ -38,6 +40,7 @@ class Card
       'jp_name' => @jp_name,
       'en_name' => @en_name,
       'image' => @image,
+      'colors' => @colors,
       'mana' => @mana,
       'type' => @type,
       'power' => @power,
