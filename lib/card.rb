@@ -25,7 +25,7 @@ class Card
     @jp_name = jp_name
     @en_name = en_name
     @image = image
-    @colors = colors
+    @colors = colors.sort
     @mana = mana
     @type = type
     @power = power
