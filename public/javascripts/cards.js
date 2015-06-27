@@ -11,14 +11,14 @@ function Cards(url) {
       }.bind(this))
     },
     onload: function() {},
-    slices: function(size) {
+    slices: function(size, data) {
       var slices = []
-      var cards = this.data
+      var cards = data ? data : this.data
       for (var i = 0; i < cards.length; i += size) {
         var slice = cards.slice(i, i + size)
         slices.push(slice)
       }
       return slices
-    },
+    }
   }
 }
